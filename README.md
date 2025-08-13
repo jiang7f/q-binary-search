@@ -1,5 +1,3 @@
-# qbs: A Transition Hamiltonian-based Approximation Algorithm for Solving Constrained Binary Optimization Problems
-
 ## Overview
 
 This repository consists of three main components:
