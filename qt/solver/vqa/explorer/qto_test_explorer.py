@@ -37,7 +37,7 @@ class QtoTestExplorer(Explorer):
         # 计数器，每次取值自动加一
         counter = 0
         # 重复次数
-        self.model_option.Hd_bitstr_list = self.model_option.Hd_bitstr_list[::-1]
+        self.model_option.Hd_bitstr_list = self.model_option.Hd_bitstr_list
         self.num_hdi = len(self.model_option.Hd_bitstr_list)
         self.num_repetition = self.num_hdi
         iprint("m:", self.num_hdi)
@@ -102,6 +102,11 @@ class QtoTestExplorer(Explorer):
                             dict_prob[tuple(new_state_add)] = share_prob
                             dict_prob[tuple(state)] = share_prob
 
+                            # 新增: 如果新的 split_chain 更短，则更新
+                            split_chain = dict_split[tuple(state)] + [idx]
+                            if len(split_chain) < len(dict_split[tuple(new_state_add)]):
+                                dict_split[tuple(new_state_add)] = split_chain
+
                     if all(elem in [0, 1] for elem in new_state_sub):
                         if tuple(new_state_sub) not in dict_state:
                             meaningful_idx.add(order * self.num_hdi + idx)
@@ -123,6 +128,12 @@ class QtoTestExplorer(Explorer):
                             share_prob = (dict_prob[tuple(state)] + dict_prob[tuple(new_state_sub)]) / 2
                             dict_prob[tuple(new_state_sub)] = share_prob
                             dict_prob[tuple(state)] = share_prob
+
+                            # 新增: 如果新的 split_chain 更短，则更新
+                            split_chain = dict_split[tuple(state)] + [idx]
+                            if len(split_chain) < len(dict_split[tuple(new_state_sub)]):
+                                dict_split[tuple(new_state_sub)] = split_chain
+
                 space_explore.append(len(dict_state))
 
 
@@ -134,8 +145,8 @@ class QtoTestExplorer(Explorer):
         iprint("max_prob: ", max(dict_prob.values()), math.log2(max(dict_prob.values())))
         iprint("max_split: ", max_split)
         iprint("longest_train: ", longest_train)
-        # return space_explore, dict_state, max_order, counter, max_split, longest_train
-        return list(meaningful_idx)
+        return space_explore, dict_state, max_order, counter, max_split, longest_train
+        # return list(meaningful_idx)
     
     def print_generation_relationship(self):
         dict_state = self.dict_state

@@ -1,9 +1,9 @@
 should_print = True
 
-from qt.problems.facility_location_problem import generate_flp
-from qt.problems.set_cover_problem import generate_scp
-from qt.problems.k_partition_problem import generate_kpp
-from qt.problems.graph_coloring_problem import generate_gcp
+from qt.problem.facility_location_problem import generate_flp
+from qt.problem.set_cover_problem import generate_scp
+from qt.problem.k_partition_problem import generate_kpp
+from qt.problem.graph_coloring_problem import generate_gcp
 from qt.model import LinearConstrainedBinaryOptimization as LcboModel
 from qt.solver.vqa.optimizer import CobylaOptimizer, AdamOptimizer
 from qt.solver.vqa import (
@@ -15,7 +15,7 @@ from qt.provider import (
 from qt.solver.vqa.explorer import QtoExplorer
 num_case = 1
 # a, b = generate_scp(num_case,[(3, 3)])
-a, b = generate_scp(num_case,[(5, 5)])
+a, b = generate_scp(num_case,[(6, 5)])
 # print(a[0][0])
 # (1, [(2, 1), (3, 2), (3, 3), (4, 3), (4, 4)], 1, 20)
 
